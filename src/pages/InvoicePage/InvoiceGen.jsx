@@ -25,7 +25,7 @@ const InvoiceGen = () => {
         </p>
       </div>
 
-      <div className="min-h-screen flex flex-col md:flex-row items-center justify-center px-4 sm:px-10 md:px-20 lg:px-56 py-10 gap-10">
+      <div className=" flex flex-col md:flex-row items-center justify-center px-4 sm:px-10 md:px-20 lg:px-56 py-10 gap-10">
         {/* Image Section */}
         <motion.div
           className="w-full md:w-1/2 flex justify-center"
