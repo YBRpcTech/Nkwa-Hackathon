@@ -12,7 +12,10 @@ const App = () => {
     <Router>
       <Navbar />
       <div className="mt-28">
-      <ScanInvoice />
+      <InvoiceGen />
+      <Routes>
+      <Route path="/scan" element={<ScanInvoice />} />
+      </Routes>
       </div>
       
      
