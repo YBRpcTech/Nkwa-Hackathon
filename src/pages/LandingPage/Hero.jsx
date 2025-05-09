@@ -20,12 +20,12 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-2">
-          <Link to="/receive">
+          <Link to="/request-money">
             <button className="py-4 px-8 bg-primary text-white font-semibold rounded-full hover:scale-105 transition-all duration-300">
               Receive Instantly
             </button>
           </Link>
-          <Link to="/send">
+          <Link to="/scan-invoice">
             <button className="py-4 px-8 border-2 border-primary text-primary font-semibold rounded-full hover:scale-105 transition-all duration-300">
               Pay Instantly
             </button>

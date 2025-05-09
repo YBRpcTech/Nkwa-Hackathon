@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import QRCode from 'react-qr-code';
 import { Copy } from 'lucide-react';
@@ -12,6 +12,22 @@ const InvoiceGen = () => {
     navigator.clipboard.writeText(invoiceCode);
     alert('Invoice copied to clipboard!');
   };
+
+  // Stop any active camera/video streams on unmount
+  useEffect(() => {
+    return () => {
+      // Find all video elements and stop their streams
+      const videos = document.querySelectorAll('video');
+      videos.forEach((video) => {
+        const stream = video.srcObject;
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach((track) => track.stop());
+          video.srcObject = null;
+        }
+      });
+    };
+  }, []);
 
   return (
     <>
