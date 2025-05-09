@@ -37,11 +37,11 @@ const ConverterPage = () => {
   return (
     <div className="min-h-screen bg-bg flex flex-col items-center justify-center px-4 py-8">
       <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-3xl font-bold text-primary-2">
-          Send money to Cameroon<br />from Anywhere!
+        <h1 className="text-3xl md:text-3xl font-bold text-primary">
+          Do Instant Payments<br />Just By Scanning!
         </h1>
         <p className="text-gray-700 mt-4 font-semibold">
-          Fast, affordable online money transfers <br /> from Anywhere to Cameroon
+          Fast, affordable online money transfers <br /> from Anywhere In Cameroon
         </p>
       </div>
 
