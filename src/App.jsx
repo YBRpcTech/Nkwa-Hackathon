@@ -13,6 +13,7 @@ const App = () => {
       <Navbar />
       <div className="mt-28">
       <InvoiceGen />
+      <ScanInvoice />
       <Routes>
       <Route path="/scan" element={<ScanInvoice />} />
       </Routes>
