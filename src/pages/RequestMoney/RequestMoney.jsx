@@ -20,7 +20,7 @@ const RequestMoney = () => {
   const goBack = () => setStep((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row transition-all duration-500 ease-in-out px-4 sm:px-8  lg:px-46 xl:px-56 ">
+    <div className="min-h-screen flex flex-col lg:flex-row transition-all duration-500 ease-in-out px-4 sm:px-8  lg:px-46 xl:px-56 bg-green-100">
       {/* Image Section */}
       <div className="w-full lg:w-1/2 flex justify-center items-center mb-10 lg:mb-0">
         <img src={img} alt="TchokoPay" className="w-full max-w-md lg:max-w-full object-contain" />
@@ -65,7 +65,7 @@ const RequestMoney = () => {
                       setPayerMethod(method);
                       goNext();
                     }}
-                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition bg-white flex flex-col items-center text-center"
+                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition bg-green-100 flex flex-col items-center text-center"
                   >
                     {method === 'Bitcoin Lightning' && <Bitcoin className="text-yellow-500 mb-2" size={28} />}
                     {method === 'MTN MoMo' && <Phone className="text-yellow-600 mb-2" size={28} />}
@@ -93,7 +93,7 @@ const RequestMoney = () => {
                       setReceiverMethod(method);
                       goNext();
                     }}
-                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition bg-white flex flex-col items-center text-center"
+                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition bg-green-100 flex flex-col items-center text-center"
                   >
                     {method === 'MTN MoMo' && <Phone className="text-yellow-600 mb-2" size={28} />}
                     {method === 'Orange Money' && <Phone className="text-orange-500 mb-2" size={28} />}
