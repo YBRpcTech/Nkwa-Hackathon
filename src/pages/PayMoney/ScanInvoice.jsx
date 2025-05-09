@@ -30,7 +30,6 @@ const ScanInvoice = () => {
         const devices = await Html5Qrcode.getCameras();
         if (devices.length === 0) throw new Error('No cameras found');
 
-        // Prefer back-facing camera if available
         const backCamera = devices.find((device) =>
           /back|rear|environment/i.test(device.label)
         );
@@ -39,7 +38,11 @@ const ScanInvoice = () => {
 
         await html5QrCodeRef.current.start(
           cameraId,
-          { fps: 10, qrbox: 200 },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 250 }, // Square box
+            aspectRatio: 1.0,
+          },
           (decodedText) => {
             if (decodedText !== invoiceCode) {
               setInvoiceCode(decodedText);
@@ -73,9 +76,8 @@ const ScanInvoice = () => {
       clearTimeout(delayInit);
       stopScanner();
     };
-  }, [invoiceCode, isScanning]);
+  }, [invoiceCode]);
 
-  // Placeholder data
   const amountToPay = '₿ 0.00015 (~$10)';
   const receiver = 'MTN Mobile Money - 675 123 456';
   const description = 'Payment for freelance web development service';
@@ -121,8 +123,12 @@ const ScanInvoice = () => {
           </div>
 
           {/* Scanner UI */}
-          <div className="border-4 border-dashed border-green-500 rounded-lg h-56 bg-gray-50 relative overflow-hidden">
-            <div id="qr-scanner-region" ref={qrRef} className="w-full h-full" />
+          <div className="flex justify-center items-center border-4 border-dashed border-green-500 rounded-lg bg-gray-50 overflow-hidden">
+            <div
+              id="qr-scanner-region"
+              ref={qrRef}
+              className="w-[250px] h-[250px] relative"
+            />
           </div>
 
           {/* Manual Entry */}
