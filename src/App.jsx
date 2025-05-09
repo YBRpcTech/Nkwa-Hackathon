@@ -6,12 +6,13 @@ import Navbar from "./components/Navbar/Navbar";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import RequestMoney from "./pages/RequestMoney/RequestMoney";
 import InvoiceGen from "./pages/InvoicePage/InvoiceGen";
+import ScanInvoice from "./pages/PayMoney/ScanInvoice";
 const App = () => {
   return (
     <Router>
       <Navbar />
       <div className="mt-28">
-      <InvoiceGen />
+      <ScanInvoice />
       </div>
       
      

@@ -9,32 +9,58 @@ const ScanInvoice = () => {
   const [scanned, setScanned] = useState(false);
   const qrRef = useRef(null);
   const html5QrCodeRef = useRef(null);
+  const [isScanning, setIsScanning] = useState(false);
 
   useEffect(() => {
     const qrRegionId = "qr-scanner-region";
-    const qrCodeSuccessCallback = (decodedText) => {
-      if (decodedText !== invoiceCode) {
-        setInvoiceCode(decodedText);
-        setScanned(true);
-        html5QrCodeRef.current?.stop();
+
+    const startScanner = async () => {
+      if (!qrRef.current) return;
+
+      html5QrCodeRef.current = new Html5Qrcode(qrRegionId);
+
+      try {
+        const devices = await Html5Qrcode.getCameras();
+        if (devices && devices.length) {
+          const cameraId = devices[0].id;
+
+          await html5QrCodeRef.current.start(
+            cameraId,
+            { fps: 10, qrbox: 200 },
+            (decodedText) => {
+              if (decodedText !== invoiceCode) {
+                setInvoiceCode(decodedText);
+                setScanned(true);
+
+                if (isScanning) {
+                  html5QrCodeRef.current.stop().then(() => {
+                    setIsScanning(false);
+                  }).catch((err) => {
+                    console.error("Stop error:", err);
+                  });
+                }
+              }
+            }
+          );
+          setIsScanning(true);
+        }
+      } catch (err) {
+        console.error("Camera start error", err);
       }
     };
 
-    html5QrCodeRef.current = new Html5Qrcode(qrRegionId);
-
-    Html5Qrcode.getCameras().then((devices) => {
-      if (devices && devices.length) {
-        const cameraId = devices[0].id;
-        html5QrCodeRef.current
-          .start(cameraId, { fps: 10, qrbox: 200 }, qrCodeSuccessCallback)
-          .catch(err => console.error("Camera start error", err));
-      }
-    });
+    // Delay scanner start to ensure DOM is rendered
+    const delayInit = setTimeout(startScanner, 500);
 
     return () => {
-      html5QrCodeRef.current?.stop().then(() => {
-        html5QrCodeRef.current.clear();
-      });
+      clearTimeout(delayInit);
+      if (html5QrCodeRef.current && isScanning) {
+        html5QrCodeRef.current.stop().then(() => {
+          html5QrCodeRef.current.clear();
+        }).catch((err) => {
+          console.error("Stop cleanup error:", err);
+        });
+      }
     };
   }, []);
 
