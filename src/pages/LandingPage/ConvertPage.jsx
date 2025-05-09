@@ -4,7 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { IoIosArrowDown } from 'react-icons/io';
 import { TbRefresh } from 'react-icons/tb';
 
-const SAT_TO_XAF_RATE = 278; // 1 SAT = 278 XAF
+const SAT_TO_XAF_RATE = 0.52; // 1 SAT = 278 XAF
 
 const ConverterPage = () => {
   const [inputValue, setInputValue] = useState('');
@@ -47,7 +47,7 @@ const ConverterPage = () => {
 
       <div className="bg-white p-6 md:p-8 rounded-xl shadow-xl w-[350px]">
         <div className="text-xs bg-blue-100 text-primary-3 rounded-full px-4 py-1 inline-block mb-6 font-semibold">
-          1 SAT = 278 XAF
+          1 SAT = 0.52 XAF
         </div>
 
         <div className="space-y-4">
