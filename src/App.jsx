@@ -8,12 +8,13 @@ import RequestMoney from "./pages/RequestMoney/RequestMoney";
 import InvoiceGen from "./pages/InvoicePage/InvoiceGen";
 import ScanInvoice from "./pages/PayMoney/ScanInvoice";
 import PaidSuccess from "./pages/PayMoney/PaidSuccess";
+import TransactionComplete from "./pages/RequestMoney/TransactionComplete";
 const App = () => {
   return (
     <Router>
       <Navbar />
       <div className="mt-28">
-      <PaidSuccess />
+      <TransactionComplete />
       </div>
       
      
