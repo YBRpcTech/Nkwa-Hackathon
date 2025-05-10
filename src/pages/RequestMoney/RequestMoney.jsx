@@ -90,7 +90,7 @@ const RequestMoney = () => {
             <motion.div key="step1" {...fadeVariant}>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Welcome to TchokoPay</h2>
               <p className="text-gray-600 mt-2">
-                Seamlessly send money through Bitcoin Lightning, MTN MoMo or Orange Money.
+                Seamlessly Request money through Bitcoin Lightning, MTN MoMo or Orange Money.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mt-6">
                 <button
@@ -103,7 +103,7 @@ const RequestMoney = () => {
                   onClick={goNext}
                   className="bg-primary-3 hover:bg-primary-2 text-white px-6 py-2 rounded-full flex items-center justify-center gap-2"
                 >
-                  <FcMoneyTransfer size={18} /> Pay as Guest
+                  <FcMoneyTransfer size={18} /> Request as Guest
                 </button>
               </div>
             </motion.div>
@@ -111,7 +111,7 @@ const RequestMoney = () => {
 
           {step === 2 && (
             <motion.div key="step2" {...fadeVariant}>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">How would you like to pay?</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">How will the payer pay?</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {['Bitcoin Lightning', 'MTN MoMo', 'Orange Money'].map((method, i) => (
                   <div
@@ -136,7 +136,7 @@ const RequestMoney = () => {
           {step === 3 && (
             <motion.div key="step3" {...fadeVariant}>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                How should the receiver receive the money?
+                How would you want to receiver receive the money?
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {['MTN MoMo', 'Orange Money'].map((method, i) => (

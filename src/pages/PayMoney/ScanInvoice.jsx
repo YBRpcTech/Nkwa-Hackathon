@@ -120,7 +120,7 @@ const ScanInvoice = () => {
     // ✅ Redirect after 1 minute
     setTimeout(() => {
       navigate("/payment-success");
-    }, 60000); // 1 minute
+    }, 30000); // 1 minute
   };
 
   return (
