@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/generate-qr" element={<GenerateQRCode />} />
           <Route path="/scan-qr" element={<ScanQRCode />} />
           <Route path="/request-money" element={<RequestMoney />} />
-          <Route path="/generate-invoice" element={<InvoiceGen />} />
+          <Route path="/generate-invoice/:id" element={<InvoiceGen />} />
           <Route path="/scan-invoice" element={<ScanInvoice />} />
           <Route path="/payment-success" element={<PaidSuccess />} />
           <Route path="/transaction-complete" element={<TransactionComplete />} />
