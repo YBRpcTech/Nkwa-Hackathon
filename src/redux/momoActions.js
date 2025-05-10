@@ -38,7 +38,7 @@ export const makeMomoPayment = (paymentDetails) => async (dispatch) => {
     dispatch({ type: MOMO_PAYMENT_REQUEST });
 
     // Making the API call to make a payment
-    const response = await Api.post('/api/collectPayment', paymentDetails);
+    const response = await Api.post('/api/momo/pay', paymentDetails);
 
     // Dispatching the success action after successful payment
     dispatch({
