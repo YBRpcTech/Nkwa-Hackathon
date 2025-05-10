@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   Camera,
   QrCode,
@@ -6,15 +6,16 @@ import {
   Phone,
   DollarSign,
   ClipboardCheck,
-} from 'lucide-react';
-import { Html5Qrcode } from 'html5-qrcode';
-import { motion } from 'framer-motion';
-import img from '../../assets/scanning.jpg';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMomoTransaction, makeMomoPayment } from '../../redux/momoActions';
+} from "lucide-react";
+import { Html5Qrcode } from "html5-qrcode";
+import { motion } from "framer-motion";
+import img from "../../assets/scanning.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMomoTransaction, makeMomoPayment } from "../../redux/momoActions";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigate
 
 const ScanInvoice = () => {
-  const [invoiceCode, setInvoiceCode] = useState('');
+  const [invoiceCode, setInvoiceCode] = useState("");
   const [scanned, setScanned] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [isBitcoin, setIsBitcoin] = useState(false);
@@ -23,6 +24,7 @@ const ScanInvoice = () => {
   const html5QrCodeRef = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // ✅ Initialize navigate
 
   const {
     transaction: momoTransaction,
@@ -31,7 +33,7 @@ const ScanInvoice = () => {
   } = useSelector((state) => state.momo);
 
   useEffect(() => {
-    const qrRegionId = 'qr-scanner-region';
+    const qrRegionId = "qr-scanner-region";
 
     const startScanner = async () => {
       if (!qrRef.current) return;
@@ -40,7 +42,7 @@ const ScanInvoice = () => {
 
       try {
         const devices = await Html5Qrcode.getCameras();
-        if (devices.length === 0) throw new Error('No cameras found');
+        if (devices.length === 0) throw new Error("No cameras found");
 
         const backCamera = devices.find((device) =>
           /back|rear|environment/i.test(device.label)
@@ -66,7 +68,7 @@ const ScanInvoice = () => {
 
         setIsScanning(true);
       } catch (err) {
-        console.error('Camera start error:', err);
+        console.error("Camera start error:", err);
       }
     };
 
@@ -78,7 +80,7 @@ const ScanInvoice = () => {
           setIsScanning(false);
         }
       } catch (err) {
-        console.error('Stop error:', err);
+        console.error("Stop error:", err);
       }
     };
 
@@ -91,7 +93,7 @@ const ScanInvoice = () => {
 
   useEffect(() => {
     if (invoiceCode && scanned) {
-      if (invoiceCode.startsWith('tch')) {
+      if (invoiceCode.startsWith("tch")) {
         setIsBitcoin(false);
         dispatch(fetchMomoTransaction(invoiceCode));
       } else {
@@ -114,6 +116,11 @@ const ScanInvoice = () => {
     setIsPaying(true);
     await dispatch(makeMomoPayment(payload));
     setIsPaying(false);
+
+    // ✅ Redirect after 1 minute
+    setTimeout(() => {
+      navigate("/payment-success");
+    }, 60000); // 1 minute
   };
 
   return (
@@ -128,7 +135,8 @@ const ScanInvoice = () => {
           Scan to Pay Instantly
         </h2>
         <p className="text-gray-600 mt-2 text-sm md:text-base">
-          Use your camera or wallet app to scan the QR code. If you're unable to scan, paste the invoice code manually.
+          Use your camera or wallet app to scan the QR code. If you're unable to
+          scan, paste the invoice code manually.
         </p>
       </motion.div>
 
@@ -198,7 +206,7 @@ const ScanInvoice = () => {
           <div>
             <p className="text-sm text-gray-500">Amount to Pay</p>
             <h4 className="text-lg font-semibold text-gray-800">
-              {momoTransaction ? `${momoTransaction.amount} FCFA` : '—'}
+              {momoTransaction ? `${momoTransaction.amount} FCFA` : "—"}
             </h4>
           </div>
         </div>
@@ -210,7 +218,7 @@ const ScanInvoice = () => {
             <h4 className="text-lg font-semibold text-gray-800">
               {momoTransaction
                 ? `${momoTransaction.receiverNumber} (${momoTransaction.receiverMethod})`
-                : '—'}
+                : "—"}
             </h4>
           </div>
         </div>
@@ -220,7 +228,7 @@ const ScanInvoice = () => {
           <div>
             <p className="text-sm text-gray-500">Transaction Description</p>
             <h4 className="text-lg font-semibold text-gray-800">
-              {momoTransaction ? momoTransaction.description : '—'}
+              {momoTransaction ? momoTransaction.description : "—"}
             </h4>
           </div>
         </div>
@@ -247,7 +255,9 @@ const ScanInvoice = () => {
             <Info className="text-yellow-500 w-8 h-8 animate-spin" />
             <div>
               <p className="text-sm text-gray-500">Fetching transaction...</p>
-              <h4 className="text-lg font-semibold text-gray-800">Please wait</h4>
+              <h4 className="text-lg font-semibold text-gray-800">
+                Please wait
+              </h4>
             </div>
           </div>
         ) : momoError ? (
@@ -255,7 +265,9 @@ const ScanInvoice = () => {
             <Info className="text-red-500 w-8 h-8" />
             <div>
               <p className="text-sm text-red-500">Failed to load transaction</p>
-              <h4 className="text-lg font-semibold text-red-700">{momoError}</h4>
+              <h4 className="text-lg font-semibold text-red-700">
+                {momoError}
+              </h4>
             </div>
           </div>
         ) : momoTransaction ? (
@@ -282,7 +294,7 @@ const ScanInvoice = () => {
           onClick={handlePayment}
           disabled={!momoTransaction || isPaying}
         >
-          {isPaying ? 'Processing...' : 'Pay Now'}
+          {isPaying ? "Processing..." : "Pay Now"}
         </button>
       </motion.div>
     </div>

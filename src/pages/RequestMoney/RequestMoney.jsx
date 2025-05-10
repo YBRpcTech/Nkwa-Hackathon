@@ -6,6 +6,8 @@ import img from '../../assets/RecieveMoney.png';
 import { FcMoneyTransfer } from 'react-icons/fc';
 import { createInvoice } from '../../redux/invoiceActions';
 import { useNavigate } from 'react-router-dom';
+import mtn from "../../assets/mtn.png";
+import orange from "../../assets/om.jpg";
 
 const fadeVariant = {
   initial: { opacity: 0, y: 20 },
@@ -29,14 +31,13 @@ const RequestMoney = () => {
     description: '',
   });
 
-  const { invoiceId, loading, error } = useSelector((state) => state.invoice); // Get invoice data from Redux state
-  console.log(invoiceId)
+  const { invoiceId, loading, error } = useSelector((state) => state.invoice);
 
   useEffect(() => {
     if (invoiceId) {
-      navigate(`/generate-invoice/${invoiceId}`); // Navigate to generate-invoice page if invoice is created successfully
+      navigate(`/generate-invoice/${invoiceId}`);
     }
-  }, [invoiceId, navigate]); // Navigate when invoice is available
+  }, [invoiceId, navigate]);
 
   const goNext = () => setStep((prev) => Math.min(prev + 1, 4));
   const goBack = () => setStep((prev) => Math.max(prev - 1, 1));
@@ -58,18 +59,29 @@ const RequestMoney = () => {
       amount: Number(formData.amount),
       description: formData.description || '',
     };
-    dispatch(createInvoice(payload)); // Dispatch the action to create invoice
-    console.log(payload);
+    dispatch(createInvoice(payload));
+  };
+
+  const renderIcon = (method) => {
+    if (method === 'Bitcoin Lightning') {
+      return <Bitcoin className="text-yellow-500 mb-2" size={28} />;
+    }
+    if (method === 'MTN MoMo') {
+      return <img src={mtn} alt="MTN" className="w-10 h-10 rounded-full object-cover mb-2" />;
+    }
+    if (method === 'Orange Money') {
+      return <img src={orange} alt="Orange" className="w-10 h-10 rounded-full object-cover mb-2" />;
+    }
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row transition-all duration-500 ease-in-out px-4 sm:px-8  lg:px-46 xl:px-56 bg-green-100">
-      {/* Image Section */}
+    <div className="min-h-screen flex flex-col lg:flex-row transition-all duration-500 ease-in-out px-4 sm:px-8 lg:px-46 xl:px-56 ">
+      {/* Left Image Section */}
       <div className="w-full lg:w-1/2 flex justify-center items-center mb-10 lg:mb-0">
         <img src={img} alt="TchokoPay" className="w-full max-w-md lg:max-w-full object-contain" />
       </div>
 
-      {/* Form Section */}
+      {/* Right Form Section */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-6 px-2 sm:px-6 mt-[-40px]">
         <div className="text-sm text-gray-500">Step {step} of 4</div>
 
@@ -108,11 +120,9 @@ const RequestMoney = () => {
                       setPayerMethod(method);
                       goNext();
                     }}
-                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition bg-green-100 flex flex-col items-center text-center"
+                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition  flex flex-col items-center text-center"
                   >
-                    {method === 'Bitcoin Lightning' && <Bitcoin className="text-yellow-500 mb-2" size={28} />}
-                    {method === 'MTN MoMo' && <Phone className="text-yellow-600 mb-2" size={28} />}
-                    {method === 'Orange Money' && <Phone className="text-orange-500 mb-2" size={28} />}
+                    {renderIcon(method)}
                     <span className="font-medium text-gray-700">{method}</span>
                   </div>
                 ))}
@@ -136,10 +146,9 @@ const RequestMoney = () => {
                       setReceiverMethod(method);
                       goNext();
                     }}
-                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition bg-green-100 flex flex-col items-center text-center"
+                    className="cursor-pointer border rounded-xl p-4 hover:shadow-md transition  flex flex-col items-center text-center"
                   >
-                    {method === 'MTN MoMo' && <Phone className="text-yellow-600 mb-2" size={28} />}
-                    {method === 'Orange Money' && <Phone className="text-orange-500 mb-2" size={28} />}
+                    {renderIcon(method)}
                     <span className="font-medium text-gray-700">{method}</span>
                   </div>
                 ))}

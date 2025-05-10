@@ -21,7 +21,7 @@ const BannerFeatures = () => {
   ];
 
   return (
-    <section className="bg-green-100 py-8 px-4 text-center">
+    <section className="bg-green-100 py-8 px-4 text-center mt-4">
       <h2 className="text-3xl font-bold text-gray-800 mb-10">
         Do your Payments Instantly!
       </h2>

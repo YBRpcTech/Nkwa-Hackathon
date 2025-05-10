@@ -4,13 +4,14 @@ import QRCode from 'react-qr-code';
 import { Copy } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import Logo from "../../assets/favicon.png";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import img from "../../assets/qr scanner.jpeg";
 import { fetchBitcoinTransaction } from '../../redux/bitcoinActions';
 import { fetchMomoTransaction } from '../../redux/momoActions';
 
 const InvoiceGen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id: invoiceId } = useParams();
 
   const {
@@ -35,10 +36,13 @@ const InvoiceGen = () => {
     }
   }, [dispatch, invoiceId, isBitcoin]);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(invoiceId);
-    alert('Invoice copied to clipboard!');
-  };
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      navigate('/transaction-complete');
+    }, 1 * 60 * 1000); // 2 minutes
+
+    return () => clearTimeout(timeout);
+  }, [navigate]);
 
   useEffect(() => {
     return () => {
@@ -54,11 +58,15 @@ const InvoiceGen = () => {
     };
   }, []);
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(invoiceId);
+    alert('Invoice copied to clipboard!');
+  };
+
   const transaction = isBitcoin ? bitcoinTransaction : momoTransaction;
   const loading = isBitcoin ? bitcoinLoading : momoLoading;
   const error = isBitcoin ? bitcoinError : momoError;
 
-  // Determine the QR value safely
   const qrValue = isBitcoin
     ? transaction?.invoiceHash
     : invoiceId;
@@ -94,7 +102,6 @@ const InvoiceGen = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Conditionally render QR Code only if value is valid */}
           {qrValue && (
             <div className="relative w-[200px] h-[200px]">
               <QRCode
@@ -112,7 +119,6 @@ const InvoiceGen = () => {
             </div>
           )}
 
-          {/* Invoice Code */}
           <div className="w-full max-w-md flex flex-col items-center px-4">
             <p className="text-gray-700 font-semibold mb-2 text-center">Invoice Code</p>
             <div className="flex items-center justify-between w-full bg-gray-100 px-4 py-3 rounded-lg shadow-sm">
