@@ -39,7 +39,7 @@ const InvoiceGen = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigate('/transaction-complete');
-    }, 1 * 30 * 1000); // 2 minutes
+    }, 1 * 60 * 1000); // 2 minutes
 
     return () => clearTimeout(timeout);
   }, [navigate]);
